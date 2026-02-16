@@ -29,4 +29,23 @@ public class BasicAuth {
      }
 
 
+     // Premitive Basic authentication
+
+    @Test
+    public void premitive(){
+        RestAssured.baseURI = "https://postman-echo.com/basic-auth";
+        RequestSpecification request = RestAssured.given();
+        request.auth().preemptive().basic("postman" , "password");
+
+        Response response = request.get();
+
+        System.out.println(response.getBody().asPrettyString());
+
+        JsonPath jsonPath = response.jsonPath();
+        String authorized = jsonPath.getString("authenticated");
+
+        Assert.assertEquals(response.statusCode(), 200);
+        Assert.assertEquals(authorized, "true");
+
+    }
 }
