@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
 
 public class learingActionClass {
 
@@ -35,19 +34,31 @@ public class learingActionClass {
                             ExpectedConditions.elementToBeClickable(By.id("rightClickBtn"))
                     );
 
+                    WebElement doubleClick = wait.until(ExpectedConditions.elementToBeClickable(By.id("doubleClickBtn")));
+
+
+
                     // Scroll to element (important)
                     ((JavascriptExecutor) driver).executeScript(
-                            "arguments[0].scrollIntoView({block:'center'});", rightBtn
+                            "arguments[0].scrollIntoView({block:'center'});", rightBtn, doubleClick
                     );
+
+
 
                     // Small pause (optional but helps stability)
                     Thread.sleep(500);
 
-                    // Perform right click
+
                     Actions actions = new Actions(driver);
+
+                    // Perform right click
                     actions.moveToElement(rightBtn).contextClick().perform();
+                    actions.moveToElement(doubleClick).doubleClick().perform();
+
 
                     System.out.println("Right click button success");
+                    System.out.println("Double click button success");
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
